@@ -7,6 +7,6 @@ output "cluster_endpoint" {
 }
 
 output "vpc_id" {
-  value = aws_vpc.aws-eks-vpc.id
+  value = aws_vpc.eks_vpc.id
 }
 
