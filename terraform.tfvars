@@ -25,6 +25,17 @@ coredns_addon_name       = "coredns"
 kube_proxy_addon_name    = "kube-proxy"
 vpc_cni_addon_name       = "vpc-cni"
 oidc_client_ids          = ["sts.amazonaws.com"]
+k8s_service_account      = "system:serviceaccount:default:aws-test"
+test_role_name           = "test-oidc"
+test_policy_name         = "test-policy"
+test_policy_actions = [
+  "s3:ListAllMyBuckets",
+  "s3:GetBucketLocation"
+]
+test_policy_resources = [
+  "arn:aws:s3:::*"
+]
+
 tags = {
   Project     = "EKS"
   Environment = "dev"
