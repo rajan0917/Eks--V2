@@ -20,7 +20,9 @@ nat_name           = "nat"
 default_route_cidr = "0.0.0.0/0"
 private_route_table_name = "private"
 public_route_table_name  = "public"
-
+coredns_addon_name       = "coredns"
+kube_proxy_addon_name    = "kube-proxy"
+vpc_cni_addon_name       = "vpc-cni"
 tags = {
   Project     = "EKS"
   Environment = "dev"
