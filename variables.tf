@@ -17,3 +17,7 @@ variable "node_group_name" { type = string }
 variable "capacity_type" { type = string }
 variable "igw_name" { type = string }
 variable "nat_name" { type = string }
+variable "default_route_cidr" { type = string }
+variable "private_route_table_name" { type = string }
+variable "public_route_table_name" { type = string }
+
