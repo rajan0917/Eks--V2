@@ -1,7 +1,7 @@
-resource "aws_vpc" "aws-eks-vpc" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "eks_vpc" {
+  cidr_block = var.vpc_cidr
 
   tags = {
-    Name = "aws-eks-vpc"
+    Name = var.vpc_name
   }
 }
