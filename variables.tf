@@ -25,6 +25,12 @@ variable "coredns_addon_name" { type = string }
 variable "kube_proxy_addon_name" { type = string }
 variable "vpc_cni_addon_name" { type = string }
 variable "oidc_client_ids" { type = list(string) }
+variable "k8s_service_account" { type = string }
+variable "test_role_name" { type = string }
+variable "test_policy_name" { type = string }
+variable "test_policy_actions" { type = list(string) }
+variable "test_policy_resources" { type = list(string) }
+
 
 
 
