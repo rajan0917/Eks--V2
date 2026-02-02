@@ -24,5 +24,8 @@ variable "public_route_table_name" { type = string }
 variable "coredns_addon_name" { type = string }
 variable "kube_proxy_addon_name" { type = string }
 variable "vpc_cni_addon_name" { type = string }
+variable "oidc_client_ids" { type = list(string) }
+
+
 
 
