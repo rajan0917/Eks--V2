@@ -24,6 +24,7 @@ public_route_table_name  = "public"
 coredns_addon_name       = "coredns"
 kube_proxy_addon_name    = "kube-proxy"
 vpc_cni_addon_name       = "vpc-cni"
+oidc_client_ids          = ["sts.amazonaws.com"]
 tags = {
   Project     = "EKS"
   Environment = "dev"
