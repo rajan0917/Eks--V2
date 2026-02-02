@@ -12,15 +12,8 @@ variable "desired_size" { type = number }
 variable "min_size" { type = number }
 variable "max_size" { type = number }
 variable "tags" { type = map(string) }
-variable "nodes_role_name" {
-  type = string
-}
-variable "node_group_name" {
-  type = string
-}
-variable "capacity_type" {
-  type = string
-}
-variable "igw_name" {
-  type = string
-}
+variable "nodes_role_name" { type = string }
+variable "node_group_name" { type = string }
+variable "capacity_type" { type = string }
+variable "igw_name" { type = string }
+variable "nat_name" { type = string }
