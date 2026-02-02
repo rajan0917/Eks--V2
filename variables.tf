@@ -20,4 +20,8 @@ variable "nat_name" { type = string }
 variable "default_route_cidr" { type = string }
 variable "private_route_table_name" { type = string }
 variable "public_route_table_name" { type = string }
+variable "coredns_addon_name" { type = string }
+variable "kube_proxy_addon_name" { type = string }
+variable "vpc_cni_addon_name" { type = string }
+
 
