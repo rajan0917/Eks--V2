@@ -1,71 +1,45 @@
 resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.aws-eks-vpc.id
+  vpc_id = aws_vpc.eks_vpc.id
 
-  route = [
-    {
-      cidr_block                 = "0.0.0.0/0"
-      nat_gateway_id             = aws_nat_gateway.nat.id
-      carrier_gateway_id         = ""
-      destination_prefix_list_id = ""
-      egress_only_gateway_id     = ""
-      gateway_id                 = ""
-      instance_id                = ""
-      ipv6_cidr_block            = ""
-      local_gateway_id           = ""
-      network_interface_id       = ""
-      transit_gateway_id         = ""
-      vpc_endpoint_id            = ""
-      vpc_peering_connection_id  = ""
-    },
-  ]
+  route {
+    cidr_block     = var.default_route_cidr
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
 
   tags = {
-    Name = "private"
+    Name = var.private_route_table_name
   }
 }
 
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.aws-eks-vpc.id
+  vpc_id = aws_vpc.eks_vpc.id
 
-  route = [
-    {
-      cidr_block                 = "0.0.0.0/0"
-      gateway_id                 = aws_internet_gateway.igw.id
-      nat_gateway_id             = ""
-      carrier_gateway_id         = ""
-      destination_prefix_list_id = ""
-      egress_only_gateway_id     = ""
-      instance_id                = ""
-      ipv6_cidr_block            = ""
-      local_gateway_id           = ""
-      network_interface_id       = ""
-      transit_gateway_id         = ""
-      vpc_endpoint_id            = ""
-      vpc_peering_connection_id  = ""
-    },
-  ]
+  route {
+    cidr_block = var.default_route_cidr
+    gateway_id = aws_internet_gateway.igw.id
+  }
 
   tags = {
-    Name = "public"
+    Name = var.public_route_table_name
   }
 }
 
-resource "aws_route_table_association" "private-ap-south-1a" {
-  subnet_id      = aws_subnet.private-ap-south-1a.id
+resource "aws_route_table_association" "private_1" {
+  subnet_id      = aws_subnet.private_1.id
   route_table_id = aws_route_table.private.id
 }
 
-resource "aws_route_table_association" "private-ap-south-1b" {
-  subnet_id      = aws_subnet.private-ap-south-1b.id
+resource "aws_route_table_association" "private_2" {
+  subnet_id      = aws_subnet.private_2.id
   route_table_id = aws_route_table.private.id
 }
 
-resource "aws_route_table_association" "public-ap-south-1a" {
-  subnet_id      = aws_subnet.public-ap-south-1a.id
+resource "aws_route_table_association" "public_1" {
+  subnet_id      = aws_subnet.public_1.id
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "public-ap-south-1b" {
-  subnet_id      = aws_subnet.public-ap-south-1b.id
+resource "aws_route_table_association" "public_2" {
+  subnet_id      = aws_subnet.public_2.id
   route_table_id = aws_route_table.public.id
 }
