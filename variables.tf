@@ -21,3 +21,6 @@ variable "node_group_name" {
 variable "capacity_type" {
   type = string
 }
+variable "igw_name" {
+  type = string
+}
