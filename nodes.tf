@@ -1,5 +1,5 @@
-resource "aws_iam_role" "nodes" {
-  name = "eks-node-group-nodes"
+resource "aws_iam_role" "nodes_role" {
+  name = var.nodes_role_name
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -13,38 +13,38 @@ resource "aws_iam_role" "nodes" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
+resource "aws_iam_role_policy_attachment" "nodes_worker_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "nodes-AmazonEKS_CNI_Policy" {
+resource "aws_iam_role_policy_attachment" "nodes_cni_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadOnly" {
+resource "aws_iam_role_policy_attachment" "nodes_ecr_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes_role.name
 }
 
-resource "aws_eks_node_group" "private-nodes" {
+resource "aws_eks_node_group" "private_nodes" {
   cluster_name    = aws_eks_cluster.eks_cluster.name
-  node_group_name = "private-nodes"
-  node_role_arn   = aws_iam_role.nodes.arn
+  node_group_name = var.node_group_name
+  node_role_arn   = aws_iam_role.nodes_role.arn
 
   subnet_ids = [
-    aws_subnet.private-ap-south-1a.id,
-    aws_subnet.private-ap-south-1b.id
+    aws_subnet.private_1.id,
+    aws_subnet.private_2.id
   ]
 
-  capacity_type  = "ON_DEMAND"
-  instance_types = ["t2.micro"]
+  capacity_type  = var.capacity_type
+  instance_types = var.instance_types
 
   scaling_config {
-    desired_size = 1
-    max_size     = 5
-    min_size     = 0
+    desired_size = var.desired_size
+    max_size     = var.max_size
+    min_size     = var.min_size
   }
 
   update_config {
@@ -55,10 +55,9 @@ resource "aws_eks_node_group" "private-nodes" {
     role = "general"
   }
 
-
   depends_on = [
-    aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.nodes_worker_policy,
+    aws_iam_role_policy_attachment.nodes_cni_policy,
+    aws_iam_role_policy_attachment.nodes_ecr_policy,
   ]
 }
