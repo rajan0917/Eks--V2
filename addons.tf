@@ -1,17 +1,14 @@
-# Define CoreDNS addon
 resource "aws_eks_addon" "coredns" {
-  cluster_name = aws_eks_cluster.eks_cluster.name
-  addon_name   = "coredns"
+  cluster_name = var.cluster_name
+  addon_name   = var.coredns_addon_name
 }
 
-# Define kube-proxy addon
 resource "aws_eks_addon" "kube_proxy" {
-  cluster_name = aws_eks_cluster.eks_cluster.name
-  addon_name   = "kube-proxy"
+  cluster_name = var.cluster_name
+  addon_name   = var.kube_proxy_addon_name
 }
 
-# Define Amazon VPC CNI addon
 resource "aws_eks_addon" "vpc_cni" {
-  cluster_name = aws_eks_cluster.eks_cluster.name
-  addon_name   = "vpc-cni"
+  cluster_name = var.cluster_name
+  addon_name   = var.vpc_cni_addon_name
 }
