@@ -16,6 +16,7 @@ desired_size       = 2
 min_size           = 1
 max_size           = 4
 igw_name           = "igw"
+nat_name           = "nat"
 tags = {
   Project     = "EKS"
   Environment = "dev"
