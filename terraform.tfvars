@@ -17,6 +17,10 @@ min_size           = 1
 max_size           = 4
 igw_name           = "igw"
 nat_name           = "nat"
+default_route_cidr = "0.0.0.0/0"
+private_route_table_name = "private"
+public_route_table_name  = "public"
+
 tags = {
   Project     = "EKS"
   Environment = "dev"
