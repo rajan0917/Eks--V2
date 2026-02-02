@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "test_oidc_assume_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:default:aws-test"]
+      values   = [var.k8s_service_account]
     }
 
     principals {
@@ -18,28 +18,25 @@ data "aws_iam_policy_document" "test_oidc_assume_role_policy" {
 
 resource "aws_iam_role" "test_oidc" {
   assume_role_policy = data.aws_iam_policy_document.test_oidc_assume_role_policy.json
-  name               = "test-oidc"
+  name               = var.test_role_name
 }
 
-resource "aws_iam_policy" "test-policy" {
-  name = "test-policy"
+resource "aws_iam_policy" "test_policy" {
+  name = var.test_policy_name
 
   policy = jsonencode({
-    Statement = [{
-      Action = [
-        "s3:ListAllMyBuckets",
-        "s3:GetBucketLocation"
-      ]
-      Effect   = "Allow"
-      Resource = "arn:aws:s3:::*"
-    }]
     Version = "2012-10-17"
+    Statement = [{
+      Action   = var.test_policy_actions
+      Effect   = "Allow"
+      Resource = var.test_policy_resources
+    }]
   })
 }
 
 resource "aws_iam_role_policy_attachment" "test_attach" {
   role       = aws_iam_role.test_oidc.name
-  policy_arn = aws_iam_policy.test-policy.arn
+  policy_arn = aws_iam_policy.test_policy.arn
 }
 
 output "test_policy_arn" {
